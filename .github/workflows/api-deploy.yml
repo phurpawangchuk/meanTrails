@@ -26,10 +26,14 @@ jobs:
       with:
         node-version: '20.15.1'  # Specify the Node.js version to use
 
-    - name: Verify Node.js installation
+    - name: Node.js Installation
       run: |
-        node -v
-        npm -v
+        ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+        curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+        node -v  # Verify installation
+        npm -v   # Verify npm installation
+        EOF
 
     - name: Create SSH key file
       run: |
