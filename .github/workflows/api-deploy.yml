@@ -34,7 +34,7 @@ jobs:
     - name: Node.js Installation
       run: |
         ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
-        curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+        curl -sL https://deb.nodesource.com/setup_20.15.1 | sudo -E bash -
         sudo apt-get install -y nodejs
         node -v  # Verify installation
         npm -v   # Verify npm installation
@@ -55,7 +55,7 @@ jobs:
 
     - name: Install PM2 and Start/Restart the Server
       run: |
-        ssh -i private_key $USER@$HOST << 'EOF'
+        ssh -i $EC2_KEY_PATH $USER@$HOST << 'EOF'
           if ! command -v pm2 > /dev/null; then
             sudo npm install -g pm2
           fi
