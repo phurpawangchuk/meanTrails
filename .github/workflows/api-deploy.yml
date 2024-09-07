@@ -44,17 +44,13 @@ jobs:
           sudo npm install
         EOF
 
-    - name: Set file ownership on EC2
-      run: |
-        ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
-          sudo chown -R www-data:www-data $APP_DIRECTORY
-        EOF
-
-
     - name: Install PM2 and Start/Restart the Server
       run: |
         ssh -i private_key $USER@$HOST << 'EOF'
-          cd /var/www/html/express-api
+          if ! command -v pm2 > /dev/null; then
+            sudo npm install -g pm2
+          fi
+          cd /home/ubuntu/meanApp
           npm install --production  # Install production dependencies
           pm2 start app.js --name "express-api" || pm2 restart express-api  # Start or restart app with PM2
           pm2 save  # Save the PM2 process list for restarts
