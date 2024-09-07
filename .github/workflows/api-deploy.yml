@@ -26,6 +26,11 @@ jobs:
       with:
         node-version: '20.15.1'  # Specify the Node.js version to use
 
+    - name: Verify Node.js installation
+      run: |
+        node -v
+        npm -v
+
     - name: Create SSH key file
       run: |
         echo "$EC2_KEY" > $EC2_KEY_PATH
