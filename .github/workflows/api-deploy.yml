@@ -53,15 +53,27 @@ jobs:
           sudo npm install
         EOF
 
-    - name: Install PM2 and Start/Restart the Server
+    - name: SSH into EC2 and set up environment
       run: |
-        ssh -i $EC2_KEY_PATH $USER@$HOST << 'EOF'
+        ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+          # Install Node.js if not already installed
+          curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+
+          # Install PM2 if not already installed
           if ! command -v pm2 > /dev/null; then
             sudo npm install -g pm2
           fi
-          cd /home/ubuntu/meanApp
-          npm install --production  # Install production dependencies
-          pm2 start app.js --name "express-api" || pm2 restart express-api  # Start or restart app with PM2
-          pm2 save  # Save the PM2 process list for restarts
-        EOF
 
+          # Navigate to the app directory
+          cd $APP_DIRECTORY
+
+          # Install production dependencies
+          npm install --production
+
+          # Start or restart the app with PM2
+          pm2 start app.js --name "express-api" || pm2 restart express-api
+
+          # Save the PM2 process list
+          pm2 save
+        EOF
