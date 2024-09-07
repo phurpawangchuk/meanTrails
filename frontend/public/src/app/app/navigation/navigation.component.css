@@ -1,0 +1,9 @@
+.cursor {
+    cursor: pointer;
+}
+
+.brand {
+    border-radius: 50%;
+    width: 90px;
+    height: 80px;
+}

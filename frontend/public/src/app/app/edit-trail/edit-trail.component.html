@@ -1,0 +1,49 @@
+<div class="d-flex flex-column justify-content-center align-items-center mt-5 pt-5 vh-100">
+    @if(isLoggedIn){
+    <div class="card shadow p-3 mb-5 bg-white w-50 rounded">
+        <form #trailForm="ngForm" (ngSubmit)="updateTrail(trailForm)" class="rounded">
+            <div class="mb-1">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" name="country" [(ngModel)]="country">
+            </div>
+            <div class="mb-1">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" name="state" [(ngModel)]="state">
+            </div>
+            <div class="mb-1">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" name="city" [(ngModel)]="city">
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Trail Details</legend>
+                    <div class="mb-1">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="name" placeholder="Trail name">
+                    </div>
+                    <div class="mb-1">
+                        <label for="distance" class="form-label">Distance</label>
+                        <input type="number" class="form-control" name="distance" [(ngModel)]="distance"
+                            placeholder="Trail distance">
+                    </div>
+                    <div class="mb-1">
+                        <label for="difficulty" class="form-label">Difficulty</label>
+                        <input type="text" class="form-control" name="difficulty" [(ngModel)]="difficulty"
+                            placeholder="Difficulty Level">
+                    </div>
+                    <div class="mb-1">
+                        <label for="imageUrl" class="form-label">Image Url</label>
+                        <input type="text" class="form-control" name="imageUrl" [(ngModel)]="imageUrl"
+                            placeholder="Enter imageUrl">
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <!-- <span *ngIf="responseMessage" class="text-success px-3">{{responseMessage}}</span> -->
+
+        </form>
+    </div>
+    }@else{
+    <h2>Login to post</h2>
+    }
+</div>

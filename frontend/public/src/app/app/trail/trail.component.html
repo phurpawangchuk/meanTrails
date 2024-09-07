@@ -1,0 +1,22 @@
+<div class="container w-60 mt-5 d-flex justify-content-center">
+    <div class="card shadow" *ngIf="trail">
+        <div class="img-container">
+            <img src="{{trail.trails[0].imageUrl}}" class="card-img-top" alt="Trail Image">
+        </div>
+        <div class="card-body">
+            <span><label>Country</label>: <i>{{trail.country}}</i></span>
+            <span><label>City</label>: <i>{{trail.city}}</i></span>
+            <span><label>State</label>: <i>{{trail.state}}</i></span>
+            <span><label>Trail Name</label>: <i>{{trail.trails[0].name}}</i></span>
+            <span><label>Distance</label>: <i>{{trail.trails[0].distance}}</i></span>
+            <span><label>Difficulty</label>: <i>{{trail.trails[0].difficulty}}</i></span>
+        </div>
+        <p>
+            @if(isLoggedIn){
+        <div class="">
+            <button class="btn btn-success mx-2" (click)="editTrail(trail._id, trail.trails[0]._id)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteTrail(trail._id,trail.trails[0]._id)">Delete</button>
+        </div>
+        }
+    </div>
+</div>

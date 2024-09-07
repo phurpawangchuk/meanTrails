@@ -1,0 +1,62 @@
+
+name: Deploy Express API
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Use Ubuntu for running the workflow
+
+    env:
+      EC2_HOST: ${{ secrets.EC2_HOST }}
+      EC2_USER: ${{ secrets.EC2_USER }}
+      EC2_KEY_PATH: /tmp/ec2_key.pem
+      EC2_KEY: ${{ secrets.EC2_KEY }}
+      APP_DIRECTORY: ${{ secrets.APP_DIRECTORY }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Check out the code from the repository
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3  # Set up Node.js in the GitHub runner
+      with:
+        node-version: '20.15.1'  # Specify the Node.js version to use
+
+    - name: Create SSH key file
+      run: |
+        echo "$EC2_KEY" > $EC2_KEY_PATH
+        chmod 400 $EC2_KEY_PATH
+
+    - name: Copy files to EC2
+      run: |
+        rsync -avz --no-perms --no-times -e "ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no" \
+              --rsync-path="sudo rsync" --exclude 'public/build' --exclude 'node_modules/' \
+              . $EC2_USER@$EC2_HOST:$APP_DIRECTORY
+
+    - name: SSH into EC2 and install the dependency
+      run: |
+        ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+          cd $APP_DIRECTORY
+          sudo npm install
+        EOF
+
+    - name: Set file ownership on EC2
+      run: |
+        ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+          sudo chown -R www-data:www-data $APP_DIRECTORY
+        EOF
+
+
+    - name: Install PM2 and Start/Restart the Server
+      run: |
+        ssh -i private_key $USER@$HOST << 'EOF'
+          cd /var/www/html/express-api
+          npm install --production  # Install production dependencies
+          pm2 start app.js --name "express-api" || pm2 restart express-api  # Start or restart app with PM2
+          pm2 save  # Save the PM2 process list for restarts
+        EOF
+

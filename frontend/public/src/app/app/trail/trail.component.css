@@ -1,0 +1,22 @@
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    overflow: hidden;
+}
+
+.img-container img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    /* Keeps aspect ratio while filling container */
+}
+
+span {
+    display: block;
+}
+
+label {
+    font-weight: lighter;
+}

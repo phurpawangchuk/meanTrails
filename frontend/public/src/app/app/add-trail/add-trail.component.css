@@ -1,0 +1,17 @@
+/* trail-details.component.css */
+fieldset {
+    border: 1px solid #ccc;
+    /* Change color as needed */
+    padding: 1em;
+    /* Add some padding inside the fieldset */
+    margin-bottom: 1em;
+    /* Add some space below the fieldset */
+    border-radius: 4px;
+    /* Optional: Add rounded corners */
+}
+
+legend {
+    font-size: 1.0em;
+    font-weight: bold;
+    border-radius: 4px;
+}

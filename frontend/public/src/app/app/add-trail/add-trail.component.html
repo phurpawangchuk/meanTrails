@@ -1,0 +1,54 @@
+<div class="d-flex flex-column justify-content-center align-items-center mt-5 pt-5">
+    @if(isLoggedIn){
+    <div class="card shadow p-3 mb-5 bg-white w-50 rounded">
+        <form #trailForm="ngForm" (ngSubmit)="addTrail(trailForm)" class="rounded">
+            <div class="mb-1">
+                <label for="country" class="form-label">Country<span class="text-danger"> * </span></label>
+                <input type="text" class="form-control" name="country" [(ngModel)]="country"
+                    placeholder="Provide country" required>
+            </div>
+            <div class="mb-1">
+                <label for="state" class="form-label">State<span class="text-danger"> * </span></label>
+                <input type="text" class="form-control" name="state" [(ngModel)]="state" placeholder="Provide state"
+                    required>
+            </div>
+            <div class="mb-1">
+                <label for="city" class="form-label">City<span class="text-danger"> * </span></label>
+                <input type="text" class="form-control" name="city" [(ngModel)]="city" placeholder="Provide city"
+                    required>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Trail Details</legend>
+                    <div class="mb-1">
+                        <label for="name" class="form-label">Name<span class="text-danger"> * </span></label>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="name"
+                            placeholder="Provide trail name" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="distance" class="form-label">Distance<span class="text-danger"> * </span></label>
+                        <input type="number" class="form-control" name="distance" [(ngModel)]="distance"
+                            placeholder="Provide trail distance" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="difficulty" class="form-label">Difficulty<span class="text-danger"> *
+                            </span></label>
+                        <input type="text" class="form-control" name="difficulty" [(ngModel)]="difficulty"
+                            placeholder="Provide difficulty level (Easy/Medium/Hard)" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="imageUrl" class="form-label">Image Url<span class="text-danger"> * </span></label>
+                        <input type="text" class="form-control" name="imageUrl" [(ngModel)]="imageUrl"
+                            placeholder="Enter imageUrl" required>
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!trailForm.valid">Submit</button>
+            <span *ngIf="responseMessage" class="text-success px-3">{{responseMessage}}</span>
+
+        </form>
+    </div>
+    }@else{
+    <h2 class="text-danger">Unauthorized!</h2>
+    }
+</div>

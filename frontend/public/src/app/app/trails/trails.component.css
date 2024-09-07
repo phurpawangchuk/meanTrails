@@ -1,0 +1,16 @@
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.card-img-top {
+    height: 220px;
+    width: 369px;
+}
+
+span {
+    font-size: 1.0em;
+    line-height: 1.5em;
+    margin-right: 0.5em;
+    font-weight: lighter;
+}

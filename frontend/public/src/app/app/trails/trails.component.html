@@ -1,0 +1,44 @@
+<div class="navbar justify-content-between">
+    <span class="navbar-brand text-danger mx-5">{{searchMessage}}</span>
+    <div class="d-flex col-4">
+        <input type="text" class="form-control mx-2" name="searchTerm" [(ngModel)]="searchTerm"
+            placeholder="Search by country or state or trail name">
+        <button class="btn btn-success mx-2" (click)="filterTrail()">Search</button>
+    </div>
+</div>
+
+<div class="row m-1 row-cols-1 row-cols-md-3 g-4">
+    @if(trails.length > 0){
+    <ng-container *ngFor="let trail of trails">
+        <div class="col gap-3">
+            <div class="card shadow mb-3" *ngFor="let subtrail of trail.trails">
+                <img [src]="subtrail.imageUrl" height="300" alt="Optimized Image" priority>
+                <div class="card-body rounded">
+                    <a routerLink="/trail/{{trail._id}}-{{subtrail._id}}">
+                        <h5 class="card-title">{{subtrail.name}}</h5>
+                    </a>
+                    <span class="text-text">Country: <i>{{trail.country}}</i></span>
+                    <span class="card-text">State: <i>{{trail.state}}</i></span>
+                    <span class="card-text">Distance: <i>{{trail.trails[0].distance}}</i></span>
+                    <span>
+                        <div class="mt-2">
+                            <a class="btn-sm" routerLink="/trail/{{trail._id}}-{{subtrail._id}}">
+                                More Detail...
+                            </a>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    }@else{
+    <div class="d-flex justify-content-center align-items-center">
+        <h5 class="text-danger">No trails found</h5>
+    </div>
+    }
+</div>
+
+<div *ngIf="trails.length > 0" class="d-flex gap-3 flex-row justify-content-center align-items-center">
+    <button class="btn btn-primary" (click)="previous()" [disabled]="offset == 0">Previous</button>
+    <button class="btn btn-primary" (click)="next()" [disabled]="count >= total">Next</button>
+</div>

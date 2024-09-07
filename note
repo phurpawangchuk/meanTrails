@@ -1,0 +1,5 @@
+npm i passport --save
+npm i passport-github --save
+
+pm2 start app.js
+pm2 stop all

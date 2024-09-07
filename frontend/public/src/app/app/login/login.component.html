@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow p-3 mb-5 bg-white rounded w-50">
+        <form #registerForm="ngForm" (ngSubmit)="login()" class="rounded">
+            <div class="mb-3">
+                <a class="btn btn-primary btn-sm" href="http://localhost:3000/api/users/gitlogin">Sign using GitHub</a>
+            </div>
+            <div class="mb-3">
+                <a class="btn btn-primary btn-sm" href="http://localhost:3000/api/users/fblogin">Sign using Facebook</a>
+            </div>
+
+            <div class="mb-3">
+                <a class="btn btn-primary btn-sm" href="http://localhost:3000/api/users/gmlogin">Sign using Google</a>
+            </div>
+
+            <div class="mb-3">
+                <a class="btn btn-primary btn-sm" href="http://localhost:3000/api/users/lilogin">Sign using LinkIn</a>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="user.username"
+                    placeholder="Enter username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" [(ngModel)]="user.password"
+                    placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Submit</button>
+        </form>
+    </div>
+</div>
