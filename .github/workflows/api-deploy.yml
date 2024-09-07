@@ -26,6 +26,11 @@ jobs:
       with:
         node-version: '20.15.1'  # Specify the Node.js version to use
 
+    - name: Create SSH key file
+      run: |
+        echo "$EC2_KEY" > $EC2_KEY_PATH
+        chmod 400 $EC2_KEY_PATH
+
     - name: Node.js Installation
       run: |
         ssh -i $EC2_KEY_PATH -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
@@ -34,11 +39,6 @@ jobs:
         node -v  # Verify installation
         npm -v   # Verify npm installation
         EOF
-
-    - name: Create SSH key file
-      run: |
-        echo "$EC2_KEY" > $EC2_KEY_PATH
-        chmod 400 $EC2_KEY_PATH
 
     - name: Copy files to EC2
       run: |
